@@ -2,5 +2,8 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mongoTest1" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mongoTest2" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mongoTest3" charset="UTF-8" />
   </component>
 </project>
