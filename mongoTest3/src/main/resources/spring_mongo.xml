@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+    <context:property-placeholder location="classpath:mongo.properties" />
+
+    <context:component-scan base-package="com.zhangchao.mongo.dao" />
+
+    <!-- Activate annotation configured components -->
+    <context:annotation-config/>
+    <!-- ============ MongoDB config start ============ -->
+    <!-- 定义mongo对象，对应的是mongodb官方jar包中的Mongo，replica-set设置集群副本的ip地址和端口 -->
+    <mongo:mongo id="mongoClient" host="${mongo.host}" port="${mongo.port}" >
+        <!-- 一些连接属性的设置 -->
+        <mongo:options
+                connections-per-host="${mongo.connectionsPerHost}"
+                threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
+                connect-timeout="${mongo.connectTimeout}"
+                max-wait-time="${mongo.maxWaitTime}"
+                auto-connect-retry="${mongo.autoConnectRetry}"
+                socket-keep-alive="${mongo.socketKeepAlive}"
+                socket-timeout="${mongo.socketTimeout}"
+                write-number="1"
+                write-timeout="0"
+                write-fsync="true"/>
+    </mongo:mongo>
+
+    <!-- 定义MongoDbFactory -->
+    <mongo:db-factory id="dbFactory"  dbname="${mongo.defaultDbName}"  username="${mongo.username}" password="${mongo.password}"   mongo-ref="mongoClient"   />
+
+    <!-- 定义没有_class字段的converter -->
+    <bean id="mongoMappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext" />
+    <bean id="defaultTypeMapper" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">
+        <constructor-arg name="typeKey"><null/></constructor-arg>
+    </bean>
+    <bean id="mongoConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+        <constructor-arg name="mongoDbFactory" ref="dbFactory" />
+        <constructor-arg name="mappingContext" ref="mongoMappingContext" />
+        <property name="typeMapper" ref="defaultTypeMapper"></property>
+    </bean>
+
+    <!-- 定义Template -->
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="dbFactory"/>
+        <constructor-arg name="mongoConverter" ref="mongoConverter"/>
+        <!--<constructor-arg name="databaseName" value="${mongo.databaseName}"/>  -->
+    </bean>
+
+    <!-- Use this post processor to translate any MongoExceptions thrown in @Repository annotated classes -->
+    <!-- ============ MongoDB config end ============ -->
+
+</beans>
