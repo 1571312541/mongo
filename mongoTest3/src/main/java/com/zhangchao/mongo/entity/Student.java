@@ -1,13 +1,25 @@
 package com.zhangchao.mongo.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.util.Date;
 
+/**
+ * @author zc
+ */
+@Document(collection = "student") //注解对应表名
 public class Student {
-
+    @Id
     private String id;
+    @Field
     private String name;
+    @Field
     private Integer age;
+    @Field
     private String gender;
+    @Field
     private Date createTime;
 
     public Student() {
@@ -20,7 +32,13 @@ public class Student {
         this.gender = gender;
         this.createTime = createTime;
     }
-
+    public Student( String id, String name, Integer age, String gender, Date createTime) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.createTime = createTime;
+    }
     public String getId() {
         return id;
     }

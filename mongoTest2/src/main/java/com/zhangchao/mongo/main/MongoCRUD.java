@@ -11,6 +11,7 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import com.zhangchao.mongo.utils.MongoUtils;
 import org.bson.Document;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -84,6 +85,7 @@ public class MongoCRUD {
             System.out.println(cursor.next().toJson());
         }
     }
+
     /**
      *  测试查询 （从数据库中第三个数据开始查询，查询8个）
      * @param database 操作的数据库
@@ -161,7 +163,6 @@ public class MongoCRUD {
             }
         });
     }
-
     /**
      *  删除一个 （删除name是dssss3的数据）
      * @param database
@@ -176,7 +177,7 @@ public class MongoCRUD {
     }
 
     /**
-     *  删除一个 （删除name是dssss3的数据）
+     *  删除多个 （删除性别是男，年龄大于22，小于28的数据）
      * @param database
      * @param collectionName
      */
@@ -224,4 +225,5 @@ public class MongoCRUD {
         MongoUtils.close(client);
 
     }
+
 }

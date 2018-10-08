@@ -1,1 +1,1 @@
-mongo的简单增删改查
+使用collection进行mongo的简单增删改查
