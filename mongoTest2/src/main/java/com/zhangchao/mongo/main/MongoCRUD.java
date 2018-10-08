@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
  *  测试CRUD的类
  */
 public class MongoCRUD {
-
     /**
      *  测试添加 （添加一条）
      * @param database
