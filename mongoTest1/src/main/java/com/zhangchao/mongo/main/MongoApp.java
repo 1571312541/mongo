@@ -12,7 +12,6 @@ import org.bson.Document;
  * mongo简单连接测试
  */
 public class MongoApp {
-
     public static void main(String[] args){
         try {
             //连接mongo服务器(3后这么连接，传统uri mongodb:// 账号 ：密码 @ IP：端口号 / 数据库)
